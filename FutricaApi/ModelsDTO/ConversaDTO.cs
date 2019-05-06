@@ -7,16 +7,20 @@ namespace FutricaApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ConversasUsuario
+    public partial class ConversaDTO
     {
+ 
         public int id { get; set; }
 
-        public int ConversaId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string nome { get; set; }
 
         public int UsuarioId { get; set; }
 
-        public virtual Conversa Conversa { get; set; }
+        public bool flgAtivo { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
+        public bool flgGrupo { get; set; }
+
     }
 }

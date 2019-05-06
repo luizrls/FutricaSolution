@@ -17,15 +17,13 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/Mensagens
-        public IQueryable<Mensagen> GetMensagens()
-        {
-            return db.Mensagens;
-        }
+        public IQueryable<MensagenDTO> GetMensagens() => db.Mensagens.Select(x=> new MensagenDTO {id=x.id, flgAtivo=x.flgAtivo,ConversaId=x.ConversaId,dtEnvio=x.dtEnvio,mensagem=x.mensagem,MensagemTiposId=x.MensagemTiposId,UsuarioId=x.UsuarioId,usuarioNick=x.usuarioNick });
+
 
         // GET: api/Mensagens
-        public IQueryable<Mensagen> GetMensagens(int ConversaId, DateTime DtUltimaAtualiz)
+        public IQueryable<MensagenDTO> GetMensagens(int ConversaId, DateTime DtUltimaAtualiz)
         {
-            return db.Mensagens.Where(x => x.flgAtivo == true && x.ConversaId == ConversaId && x.dtEnvio >= DtUltimaAtualiz);
+            return db.Mensagens.Where(x => x.flgAtivo == true && x.ConversaId == ConversaId && x.dtEnvio >= DtUltimaAtualiz).Select(x => new MensagenDTO { id = x.id, flgAtivo = x.flgAtivo, ConversaId = x.ConversaId, dtEnvio = x.dtEnvio, mensagem = x.mensagem, MensagemTiposId = x.MensagemTiposId, UsuarioId = x.UsuarioId, usuarioNick = x.usuarioNick });
         }
 
         // GET: api/Mensagens/5
@@ -77,7 +75,7 @@ namespace FutricaApi.Controllers
         //}
 
         // POST: api/Mensagens
-        [ResponseType(typeof(Mensagen))]
+        [ResponseType(typeof(MensagenDTO))]
         public IHttpActionResult PostMensagen(Mensagen mensagen)
         {
             if (!ModelState.IsValid)
@@ -88,11 +86,22 @@ namespace FutricaApi.Controllers
             db.Mensagens.Add(mensagen);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = mensagen.id }, mensagen);
+            MensagenDTO mensagenDTO = new MensagenDTO();
+
+            mensagenDTO.id = mensagen.id;
+            mensagenDTO.flgAtivo = mensagen.flgAtivo;
+            mensagenDTO.ConversaId = mensagen.ConversaId;
+            mensagenDTO.dtEnvio = mensagen.dtEnvio;
+            mensagenDTO.mensagem = mensagen.mensagem;
+            mensagenDTO.MensagemTiposId = mensagen.MensagemTiposId;
+            mensagenDTO.UsuarioId = mensagen.UsuarioId;
+            mensagenDTO.usuarioNick = mensagen.usuarioNick;
+
+            return CreatedAtRoute("DefaultApi", new { id = mensagenDTO.id }, mensagenDTO);
         }
 
         // DELETE: api/Mensagens/5
-        [ResponseType(typeof(Mensagen))]
+        [ResponseType(typeof(MensagenDTO))]
         public IHttpActionResult DeleteMensagen(int id, int UsuarioId)
         {
             Mensagen mensagen = db.Mensagens.Find(id);
@@ -128,7 +137,18 @@ namespace FutricaApi.Controllers
                 }
             }
 
-            return Ok(mensagen);
+            MensagenDTO mensagenDTO = new MensagenDTO();
+
+            mensagenDTO.id = mensagen.id;
+            mensagenDTO.flgAtivo = mensagen.flgAtivo;
+            mensagenDTO.ConversaId = mensagen.ConversaId;
+            mensagenDTO.dtEnvio = mensagen.dtEnvio;
+            mensagenDTO.mensagem = mensagen.mensagem;
+            mensagenDTO.MensagemTiposId = mensagen.MensagemTiposId;
+            mensagenDTO.UsuarioId = mensagen.UsuarioId;
+            mensagenDTO.usuarioNick = mensagen.usuarioNick;
+
+            return Ok(mensagenDTO);
         }
 
         protected override void Dispose(bool disposing)

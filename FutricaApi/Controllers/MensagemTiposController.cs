@@ -17,13 +17,11 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/MensagemTipos
-        public IQueryable<MensagemTipos> GetMensagemTipos()
-        {
-            return db.MensagemTipos;
-        }
+        public IQueryable<MensagemTiposDTO> GetMensagemTipos() => db.MensagemTipos.Select(x => new MensagemTiposDTO { id = x.id, nome = x.nome });
+
 
         // GET: api/MensagemTipos/5
-        [ResponseType(typeof(MensagemTipos))]
+        [ResponseType(typeof(MensagemTiposDTO))]
         public IHttpActionResult GetMensagemTipos(int id)
         {
             MensagemTipos mensagemTipos = db.MensagemTipos.Find(id);
@@ -32,7 +30,13 @@ namespace FutricaApi.Controllers
                 return NotFound();
             }
 
-            return Ok(mensagemTipos);
+            MensagemTiposDTO mensagemTiposDTO = new MensagemTiposDTO();
+
+            mensagemTiposDTO.id = mensagemTipos.id;
+            mensagemTiposDTO.nome = mensagemTipos.nome;
+
+
+            return Ok(mensagemTiposDTO);
         }
 
         // PUT: api/MensagemTipos/5
@@ -71,7 +75,7 @@ namespace FutricaApi.Controllers
         }
 
         // POST: api/MensagemTipos
-        [ResponseType(typeof(MensagemTipos))]
+        [ResponseType(typeof(MensagemTiposDTO))]
         public IHttpActionResult PostMensagemTipos(MensagemTipos mensagemTipos)
         {
             if (!ModelState.IsValid)
@@ -82,11 +86,16 @@ namespace FutricaApi.Controllers
             db.MensagemTipos.Add(mensagemTipos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = mensagemTipos.id }, mensagemTipos);
+            MensagemTiposDTO mensagemTiposDTO = new MensagemTiposDTO();
+
+            mensagemTiposDTO.id = mensagemTipos.id;
+            mensagemTiposDTO.nome = mensagemTipos.nome;
+
+            return CreatedAtRoute("DefaultApi", new { id = mensagemTiposDTO.id }, mensagemTiposDTO);
         }
 
         // DELETE: api/MensagemTipos/5
-        [ResponseType(typeof(MensagemTipos))]
+        [ResponseType(typeof(MensagemTiposDTO))]
         public IHttpActionResult DeleteMensagemTipos(int id)
         {
             MensagemTipos mensagemTipos = db.MensagemTipos.Find(id);
@@ -98,7 +107,12 @@ namespace FutricaApi.Controllers
             db.MensagemTipos.Remove(mensagemTipos);
             db.SaveChanges();
 
-            return Ok(mensagemTipos);
+            MensagemTiposDTO mensagemTiposDTO = new MensagemTiposDTO();
+
+            mensagemTiposDTO.id = mensagemTipos.id;
+            mensagemTiposDTO.nome = mensagemTipos.nome;
+
+            return Ok(mensagemTiposDTO);
         }
 
         protected override void Dispose(bool disposing)

@@ -30,7 +30,7 @@ namespace FutricaApi.Models
         public string nick { get; set; }
 
         public bool flgAtivo { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConversasUsuario> ConversasUsuarios { get; set; }
     }

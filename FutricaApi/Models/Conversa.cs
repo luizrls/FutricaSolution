@@ -4,8 +4,6 @@ namespace FutricaApi.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Conversa
     {
@@ -27,10 +25,10 @@ namespace FutricaApi.Models
         public bool flgAtivo { get; set; }
 
         public bool flgGrupo { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConversasUsuario> ConversasUsuarios { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mensagen> Mensagens { get; set; }
     }

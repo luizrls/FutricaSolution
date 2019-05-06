@@ -20,7 +20,7 @@ namespace FutricaApi.Models
         [Required]
         [StringLength(10)]
         public string nome { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mensagen> Mensagens { get; set; }
     }

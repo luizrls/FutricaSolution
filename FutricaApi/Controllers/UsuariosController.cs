@@ -17,16 +17,14 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/Usuarios
-        public IQueryable<Usuario> GetUsuarios()
-        {
-            return db.Usuarios;
-        }
+        public IQueryable<UsuarioDTO> GetUsuarios() => db.Usuarios.Select(x=> new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login });
+
 
         // GET: api/Usuarios?login=Teste&senha=1234
-        [ResponseType(typeof(Usuario))]
+        [ResponseType(typeof(UsuarioDTO))]
         public IHttpActionResult GetUsuario(string login, string senha)
         {
-            Usuario usuario = db.Usuarios.Where(x=> x.login ==  login && x.senha == senha).FirstOrDefault();
+            UsuarioDTO usuario = db.Usuarios.Where(x=> x.login ==  login && x.senha == senha).Select(x => new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login }).FirstOrDefault();
             if (usuario == null)
             {
                 return NotFound();
@@ -71,7 +69,7 @@ namespace FutricaApi.Controllers
         }
 
         // POST: api/Usuarios
-        [ResponseType(typeof(Usuario))]
+        [ResponseType(typeof(UsuarioDTO))]
         public IHttpActionResult PostUsuario(Usuario usuario)
         {
             if (!ModelState.IsValid)
@@ -82,11 +80,18 @@ namespace FutricaApi.Controllers
             db.Usuarios.Add(usuario);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = usuario.id }, usuario);
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+            usuarioDTO.id = usuario.id;
+            usuarioDTO.nick = usuario.nick;
+            usuarioDTO.flgAtivo = usuario.flgAtivo;
+            usuarioDTO.login = usuario.login;
+
+            return CreatedAtRoute("DefaultApi", new { id = usuarioDTO.id }, usuarioDTO);
         }
 
         // DELETE: api/Usuarios/5
-        [ResponseType(typeof(Usuario))]
+        [ResponseType(typeof(UsuarioDTO))]
         public IHttpActionResult DeleteUsuario(int id)
         {
             Usuario usuario = db.Usuarios.Find(id);
@@ -114,7 +119,14 @@ namespace FutricaApi.Controllers
                 }
             }
 
-            return Ok(usuario);
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+            usuarioDTO.id = usuario.id;
+            usuarioDTO.nick = usuario.nick;
+            usuarioDTO.flgAtivo = usuario.flgAtivo;
+            usuarioDTO.login = usuario.login;
+
+            return Ok(usuarioDTO);
         }
 
         protected override void Dispose(bool disposing)

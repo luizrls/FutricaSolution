@@ -17,13 +17,10 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/Conversas
-        public IQueryable<Conversa> GetConversas()
-        {
-            return db.Conversas;
-        }
+        public IQueryable<ConversaDTO> GetConversas() => db.Conversas.Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
 
         // GET: api/Conversas
-        public IQueryable<Conversa> GetConversas(int UsuarioId)
+        public IQueryable<ConversaDTO> GetConversas(int UsuarioId)
         {
 
             var ids = db.ConversasUsuarios
@@ -31,7 +28,7 @@ namespace FutricaApi.Controllers
             .Select(x => x.ConversaId) // extract the emails from users
             .ToList();
 
-            return db.Conversas.Where(x => ids.Contains(x.id));
+            return db.Conversas.Where(x => ids.Contains(x.id)).Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
 
         }
 
@@ -84,7 +81,7 @@ namespace FutricaApi.Controllers
         }
 
         // POST: api/Conversas
-        [ResponseType(typeof(Conversa))]
+        [ResponseType(typeof(ConversaDTO))]
         public IHttpActionResult PostConversa(Conversa conversa)
         {
             if (!ModelState.IsValid)
@@ -104,7 +101,15 @@ namespace FutricaApi.Controllers
 
             conversasUsuariosController.PostConversasUsuario(conversasUsuario);
 
-            return CreatedAtRoute("DefaultApi", new { id = conversa.id }, conversa);
+            ConversaDTO conversaDTO = new ConversaDTO();
+
+            conversaDTO.id = conversa.id;
+            conversaDTO.UsuarioId = conversa.UsuarioId;
+            conversaDTO.nome = conversa.nome;
+            conversaDTO.flgAtivo = conversa.flgAtivo;
+            conversaDTO.flgGrupo = conversa.flgGrupo;
+
+            return CreatedAtRoute("DefaultApi", new { id = conversaDTO.id }, conversaDTO);
         }
 
         // DELETE: api/Conversas/5

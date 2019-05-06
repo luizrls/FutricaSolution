@@ -7,7 +7,7 @@ namespace FutricaApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ConversasUsuario
+    public partial class ConversasUsuarioDTO
     {
         public int id { get; set; }
 
@@ -15,8 +15,5 @@ namespace FutricaApi.Models
 
         public int UsuarioId { get; set; }
 
-        public virtual Conversa Conversa { get; set; }
-
-        public virtual Usuario Usuario { get; set; }
     }
 }

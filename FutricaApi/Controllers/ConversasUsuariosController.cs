@@ -17,14 +17,11 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/ConversasUsuarios
-        public IQueryable<ConversasUsuario> GetConversasUsuarios() => db.ConversasUsuarios;
+        public IQueryable<ConversasUsuarioDTO> GetConversasUsuarios() => db.ConversasUsuarios.Select(x=> new ConversasUsuarioDTO {id=x.id,ConversaId = x.ConversaId,UsuarioId =x.UsuarioId });
 
 
         // GET: api/ConversasUsuarios
-        public IQueryable<ConversasUsuario> GetConversasUsuarios(int UsuarioId)
-        {
-            return db.ConversasUsuarios.Where(x=> x.UsuarioId==UsuarioId);
-        }
+        public IQueryable<ConversasUsuarioDTO> GetConversasUsuarios(int UsuarioId)=> db.ConversasUsuarios.Where(x => x.UsuarioId == UsuarioId).Select(x => new ConversasUsuarioDTO { id = x.id, ConversaId = x.ConversaId, UsuarioId = x.UsuarioId });
 
         // GET: api/ConversasUsuarios/5
         //[ResponseType(typeof(ConversasUsuario))]
@@ -75,7 +72,7 @@ namespace FutricaApi.Controllers
         //}
 
         // POST: api/ConversasUsuarios
-        [ResponseType(typeof(ConversasUsuario))]
+        [ResponseType(typeof(ConversasUsuarioDTO))]
         public IHttpActionResult PostConversasUsuario(ConversasUsuario conversasUsuario)
         {
             if (!ModelState.IsValid)
@@ -86,11 +83,17 @@ namespace FutricaApi.Controllers
             db.ConversasUsuarios.Add(conversasUsuario);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = conversasUsuario.id }, conversasUsuario);
+            ConversasUsuarioDTO conversasUsuarioDTO = new ConversasUsuarioDTO();
+
+            conversasUsuarioDTO.id = conversasUsuarioDTO.id;
+            conversasUsuarioDTO.UsuarioId = conversasUsuarioDTO.UsuarioId;
+            conversasUsuarioDTO.ConversaId = conversasUsuarioDTO.ConversaId;
+
+            return CreatedAtRoute("DefaultApi", new { id = conversasUsuarioDTO.id }, conversasUsuarioDTO);
         }
 
         // DELETE: api/ConversasUsuarios/5
-        [ResponseType(typeof(ConversasUsuario))]
+        [ResponseType(typeof(ConversasUsuarioDTO))]
         public IHttpActionResult DeleteConversasUsuario(int id)
         {
             ConversasUsuario conversasUsuario = db.ConversasUsuarios.Find(id);
@@ -102,7 +105,13 @@ namespace FutricaApi.Controllers
             db.ConversasUsuarios.Remove(conversasUsuario);
             db.SaveChanges();
 
-            return Ok(conversasUsuario);
+            ConversasUsuarioDTO conversasUsuarioDTO = new ConversasUsuarioDTO();
+
+            conversasUsuarioDTO.id = conversasUsuarioDTO.id;
+            conversasUsuarioDTO.UsuarioId = conversasUsuarioDTO.UsuarioId;
+            conversasUsuarioDTO.ConversaId = conversasUsuarioDTO.ConversaId;
+
+            return Ok(conversasUsuarioDTO);
         }
 
         protected override void Dispose(bool disposing)
