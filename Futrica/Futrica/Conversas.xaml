@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Futrica.Conversas">
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Label Text="Conversas"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Button Text="Contatos" Clicked="OnContatosButtonClicked"/>
+            <Button Text="Mensagens" Clicked="OnMensagensButtonClicked"/>
+        </StackLayout>
+        
+    
+    </ContentPage.Content>
+</ContentPage>

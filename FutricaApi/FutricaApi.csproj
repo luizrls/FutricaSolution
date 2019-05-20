@@ -98,6 +98,7 @@
     <Compile Include="Controllers\ConversasUsuariosController.cs" />
     <Compile Include="Controllers\MensagemTiposController.cs" />
     <Compile Include="Controllers\MensagensController.cs" />
+    <Compile Include="Controllers\UsuariosContatosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -107,12 +108,14 @@
     <Compile Include="ModelsDTO\MensagemTiposDTO.cs" />
     <Compile Include="ModelsDTO\MensagenDTO.cs" />
     <Compile Include="ModelsDTO\UsuarioDTO.cs" />
+    <Compile Include="ModelsDTO\UsuariosContatosDTO.cs" />
     <Compile Include="Models\Contexto.cs" />
     <Compile Include="Models\Conversa.cs" />
     <Compile Include="Models\ConversasUsuario.cs" />
     <Compile Include="Models\MensagemTipos.cs" />
     <Compile Include="Models\Mensagen.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\UsuariosContato.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

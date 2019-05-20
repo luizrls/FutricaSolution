@@ -1,6 +1,5 @@
 namespace FutricaApi.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -13,6 +12,7 @@ namespace FutricaApi.Models
         public Usuario()
         {
             ConversasUsuarios = new HashSet<ConversasUsuario>();
+            UsuariosContatos = new HashSet<UsuariosContato>();
         }
 
         public int id { get; set; }
@@ -33,5 +33,8 @@ namespace FutricaApi.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConversasUsuario> ConversasUsuarios { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuariosContato> UsuariosContatos { get; set; }
     }
 }

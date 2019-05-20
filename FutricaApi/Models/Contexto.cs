@@ -17,6 +17,7 @@ namespace FutricaApi.Models
         public virtual DbSet<MensagemTipos> MensagemTipos { get; set; }
         public virtual DbSet<Mensagen> Mensagens { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<UsuariosContato> UsuariosContatos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,13 +26,18 @@ namespace FutricaApi.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Conversa>()
+                .HasMany(e => e.ConversasUsuarios)
+                .WithRequired(e => e.Conversa)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Conversa>()
                 .HasMany(e => e.Mensagens)
                 .WithRequired(e => e.Conversa)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<MensagemTipos>()
                 .Property(e => e.nome)
-                .IsFixedLength();
+                .IsUnicode(false);
 
             modelBuilder.Entity<MensagemTipos>()
                 .HasMany(e => e.Mensagens)
@@ -57,6 +63,16 @@ namespace FutricaApi.Models
             modelBuilder.Entity<Usuario>()
                 .Property(e => e.nick)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Usuario>()
+                .HasMany(e => e.ConversasUsuarios)
+                .WithRequired(e => e.Usuario)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Usuario>()
+                .HasMany(e => e.UsuariosContatos)
+                .WithRequired(e => e.Usuario)
+                .WillCascadeOnDelete(false);
         }
     }
 }
