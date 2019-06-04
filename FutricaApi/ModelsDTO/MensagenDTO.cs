@@ -24,6 +24,8 @@ namespace FutricaApi.Models
 
         public bool flgAtivo { get; set; }
 
+        public bool IsIncoming { get; set; }
+
         public DateTime dtEnvio { get; set; }
 
         public int UsuarioId { get; set; }

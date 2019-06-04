@@ -17,14 +17,14 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/Usuarios
-        public IQueryable<UsuarioDTO> GetUsuarios() => db.Usuarios.Select(x=> new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login });
+        public IQueryable<UsuarioDTO> GetUsuarios() => db.Usuarios.Select(x=> new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login, senha = x.senha });
 
 
         // GET: api/Usuarios?login=Teste&senha=1234
         [ResponseType(typeof(UsuarioDTO))]
         public IHttpActionResult GetUsuario(string login, string senha)
         {
-            UsuarioDTO usuario = db.Usuarios.Where(x=> x.login ==  login && x.senha == senha).Select(x => new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login }).FirstOrDefault();
+            UsuarioDTO usuario = db.Usuarios.Where(x=> x.login ==  login && x.senha == senha).Select(x => new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login, senha = x.senha }).FirstOrDefault();
             if (usuario == null)
             {
                 return NotFound();

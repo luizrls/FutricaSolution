@@ -28,6 +28,8 @@ namespace FutricaApi.Models
 
         public int UsuarioId { get; set; }
 
+        public bool IsIncoming { get; set; }
+
         public virtual Conversa Conversa { get; set; }
 
         public virtual MensagemTipos MensagemTipos { get; set; }

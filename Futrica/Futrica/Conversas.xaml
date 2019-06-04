@@ -1,17 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Futrica.Conversas">
     <ContentPage.Content>
 
-        <StackLayout>
-            <Label Text="Conversas"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Contatos" Clicked="OnContatosButtonClicked"/>
-            <Button Text="Mensagens" Clicked="OnMensagensButtonClicked"/>
-        </StackLayout>
+        <ListView
+        x:Name="ContatosListView"
+		ItemsSource="{Binding Items}" Header="{Binding}" Footer="{Binding}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell 
+	         Text="{Binding Nome}" Detail="{Binding Email, StringFormat='E-mail: {0}'}" DetailColor="Blue"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <ContentView BackgroundColor="Beige">
+                        <Label Margin="16" HorizontalOptions="CenterAndExpand" Text="{Binding Telefone, StringFormat='Meu Fone: {0}'}" />
+                    </ContentView>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+
+            <ListView.FooterTemplate>
+                <DataTemplate>
+                    <ContentView BackgroundColor="Beige">
+                        <Label Margin="16"  HorizontalOptions="CenterAndExpand" Text="{Binding ItemsCount, StringFormat='Total de Contatos: {0}'}" />
+                    </ContentView>
+                </DataTemplate>
+            </ListView.FooterTemplate>
+        </ListView>
+</ContentPage>-->
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImage="bg.jpg"
+             x:Class="Futrica.Conversas"
+             Title="Conversas">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Adicionar Contato" Clicked="OnContatoAddButtonClicked"/>
+    </ContentPage.ToolbarItems>
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            --><!--<local:MyDataTemplateSelector x:Key="MessageTemplateSelector"/>--><!--
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+    <ListView
+        x:Name="ConversasListView"
         
-    
-    </ContentPage.Content>
+		ItemsSource="{Binding Items}"
+        ItemSelected="ConversasListView_ItemSelected" ItemTapped="lvItemTapped">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <TextCell 
+	         Text="{Binding nome}" Detail="{Binding UsuarioId}" DetailColor="Blue"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>

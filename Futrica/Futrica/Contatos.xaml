@@ -3,10 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Futrica.Contatos">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Contatos"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid BackgroundColor="#3F4552">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="1" Margin="20,0,20,0">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+                <Image x:Name="FutricaLogo" Source="FutricaLogo.png" VerticalOptions="Start" Margin="0,3,0,0"/>
+
+                <Entry x:Name="ContatoEntry" Grid.Row="1"  Placeholder="Nick" Text="" PlaceholderColor="#FFFFFF" FontSize="Large" TextColor="#FFFFFF"/>
+
+                <Button Text="Adicionar" Clicked="OnAdd" BackgroundColor="#20232C" TextColor="White" HeightRequest="50" VerticalOptions="Start" Grid.Row="3"/>
+
+
+                <Grid Grid.Row="4">
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Label BackgroundColor="#bababa" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+
+                    <Label BackgroundColor="#bababa" Grid.Column="2" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+
+
     </ContentPage.Content>
 </ContentPage>

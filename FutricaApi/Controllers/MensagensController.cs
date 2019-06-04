@@ -21,9 +21,9 @@ namespace FutricaApi.Controllers
 
 
         // GET: api/Mensagens
-        public IQueryable<MensagenDTO> GetMensagens(int ConversaId, DateTime DtUltimaAtualiz)
+        public IQueryable<MensagenDTO> GetMensagens(int ConversaId)
         {
-            return db.Mensagens.Where(x => x.flgAtivo == true && x.ConversaId == ConversaId && x.dtEnvio >= DtUltimaAtualiz).Select(x => new MensagenDTO { id = x.id, flgAtivo = x.flgAtivo, ConversaId = x.ConversaId, dtEnvio = x.dtEnvio, mensagem = x.mensagem, MensagemTiposId = x.MensagemTiposId, UsuarioId = x.UsuarioId, usuarioNick = x.usuarioNick });
+            return db.Mensagens.Where(x => x.flgAtivo == true && x.ConversaId == ConversaId).Select(x => new MensagenDTO { id = x.id, flgAtivo = x.flgAtivo, ConversaId = x.ConversaId, dtEnvio = x.dtEnvio, mensagem = x.mensagem, MensagemTiposId = x.MensagemTiposId, UsuarioId = x.UsuarioId, usuarioNick = x.usuarioNick });
         }
 
         // GET: api/Mensagens/5
@@ -96,6 +96,8 @@ namespace FutricaApi.Controllers
             mensagenDTO.MensagemTiposId = mensagen.MensagemTiposId;
             mensagenDTO.UsuarioId = mensagen.UsuarioId;
             mensagenDTO.usuarioNick = mensagen.usuarioNick;
+            mensagenDTO.IsIncoming = mensagen.IsIncoming;
+
 
             return CreatedAtRoute("DefaultApi", new { id = mensagenDTO.id }, mensagenDTO);
         }

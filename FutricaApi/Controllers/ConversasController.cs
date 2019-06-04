@@ -19,31 +19,44 @@ namespace FutricaApi.Controllers
         // GET: api/Conversas
         public IQueryable<ConversaDTO> GetConversas() => db.Conversas.Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
 
-        // GET: api/Conversas
-        public IQueryable<ConversaDTO> GetConversas(int UsuarioId)
+        //// GET: api/Conversas/5
+        //[ResponseType(typeof(ConversaDTO))]
+        //public IQueryable<ConversaDTO> GetConversas(int UsuarioId)
+        //{
+
+        //    var ids = db.ConversasUsuarios
+        //    .Where(x => x.UsuarioId == UsuarioId)
+        //    .Select(x => x.ConversaId) // extract the emails from users
+        //    .ToList();
+
+        //    return db.Conversas.Where(x => ids.Contains(x.id)).Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
+
+        //}
+
+        //GET: api/Conversas/5
+        [ResponseType(typeof(ConversaDTO))]
+        public IQueryable<ConversaDTO> GetConversa(int id)
         {
 
             var ids = db.ConversasUsuarios
-            .Where(x => x.UsuarioId == UsuarioId)
+            .Where(x => x.UsuarioId == id)
             .Select(x => x.ConversaId) // extract the emails from users
             .ToList();
 
-            return db.Conversas.Where(x => ids.Contains(x.id)).Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
+            var retorno = db.Conversas.Where(x => ids.Contains(x.id)).Select(x => new ConversaDTO { id = x.id, UsuarioId = x.UsuarioId, nome = x.nome, flgAtivo = x.flgAtivo, flgGrupo = x.flgGrupo });
 
+            return retorno;
+
+
+
+            //Conversa conversa = db.Conversas.Find(id);
+            //if (conversa == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return Ok(conversa);
         }
-
-        // GET: api/Conversas/5
-        //[ResponseType(typeof(Conversa))]
-        //public IHttpActionResult GetConversa(int id)
-        //{
-        //    Conversa conversa = db.Conversas.Find(id);
-        //    if (conversa == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(conversa);
-        //}
 
         // PUT: api/Conversas/5
         [ResponseType(typeof(void))]

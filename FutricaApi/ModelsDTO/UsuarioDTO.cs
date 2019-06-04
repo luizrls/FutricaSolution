@@ -19,6 +19,10 @@ namespace FutricaApi.Models
         [StringLength(200)]
         public string nick { get; set; }
 
+        [Required]
+        [StringLength(200)]
+        public string senha { get; set; }
+
         public bool flgAtivo { get; set; }
 
     }
