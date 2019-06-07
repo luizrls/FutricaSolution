@@ -15,7 +15,6 @@ namespace Futrica.ViewModels
             Usuario usuario = new Usuario
             {
                 nick = nick,
-                login = login,
                 senha = senha,
                 flgAtivo = true,
 

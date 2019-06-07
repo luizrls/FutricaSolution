@@ -1,61 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Futrica.Mensagens">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding conversa.nome}"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>-->
-<!--<ContentPage 
-		xmlns="http://xamarin.com/schemas/2014/forms" 
-		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		x:Class="Futrica.Mensagens" 
-		xmlns:local="clr-namespace:MonkeyChat;assembly=MonkeyChat"
-    xmlns:local1="clr-namespace:MonkeyChat"
-    BindingContext="{x:Static local:ViewModelLocator.MainChatViewModel}">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Location" Command="{Binding LocationCommand}"/>
-    </ContentPage.ToolbarItems>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <local1:MyDataTemplateSelector x:Key="MessageTemplateSelector"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    <Grid RowSpacing="0" ColumnSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        --><!--Messages in Row 0 --><!--
-        <ListView 
-			x:Name="MessagesListView" 
-			ItemTemplate="{StaticResource MessageTemplateSelector}" 
-			ItemsSource="{Binding Messages}" 
-			HasUnevenRows="True" 
-			ItemSelected="MyListView_OnItemSelected" 
-			ItemTapped="MyListView_OnItemTapped" 
-			SeparatorVisibility="None" />
-
-        --><!-- Entry and Send button in Row 1 --><!--
-        <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="10" BackgroundColor="#EFEFEF">
-            <Entry 
-			    HorizontalOptions="FillAndExpand" 
-				HeightRequest="25" 
-				Placeholder="Message" 
-				Text="{Binding OutGoingText}"/>
-            <Button 
-				Text="Send" 
-				Command="{Binding SendCommand}"/>
-        </StackLayout>
-    </Grid>
-</ContentPage>-->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
              BackgroundImage="bg.jpg"
              x:Class="Futrica.Mensagens"
              Title="Mensagens">
@@ -67,8 +13,9 @@
         
         <ListView
         x:Name="MessagesListView"
-		ItemsSource="{Binding Items}" 
+		 
             HasUnevenRows="True" 
+			ItemsSource="{Binding Items}"
 			ItemSelected="MyListView_OnItemSelected" 
 			ItemTapped="MyListView_OnItemTapped" 
 			SeparatorVisibility="None"
@@ -101,3 +48,63 @@
     </StackLayout>
     </Grid>
 </ContentPage>
+
+<!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Futrica.Mensagens">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding conversa.nome}"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>-->
+<!--<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="Futrica.Mensagens" 
+		xmlns:local="clr-namespace:MonkeyChat;assembly=MonkeyChat"
+    xmlns:local1="clr-namespace:MonkeyChat"
+    BindingContext="{x:Static local:ViewModelLocator.MainChatViewModel}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Location" Command="{Binding LocationCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local1:MyDataTemplateSelector x:Key="MessageTemplateSelector"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        -->
+<!--Messages in Row 0 -->
+<!--
+        <ListView 
+			x:Name="MessagesListView" 
+			ItemTemplate="{StaticResource MessageTemplateSelector}" 
+			ItemsSource="{Binding Messages}" 
+			HasUnevenRows="True" 
+			ItemSelected="MyListView_OnItemSelected" 
+			ItemTapped="MyListView_OnItemTapped" 
+			SeparatorVisibility="None" />
+
+        -->
+<!-- Entry and Send button in Row 1 -->
+<!--
+        <StackLayout Orientation="Horizontal" Grid.Row="1" Padding="10" BackgroundColor="#EFEFEF">
+            <Entry 
+			    HorizontalOptions="FillAndExpand" 
+				HeightRequest="25" 
+				Placeholder="Message" 
+				Text="{Binding OutGoingText}"/>
+            <Button 
+				Text="Send" 
+				Command="{Binding SendCommand}"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>-->

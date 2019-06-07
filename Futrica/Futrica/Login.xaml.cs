@@ -52,7 +52,7 @@ namespace Futrica
             //    FutricaUsuariosServiceEx.addItem(0, usuario);
             //}
 
-            var usuario1 = FutricaUsuariosServiceEx.TodosUsuarios.Where(x => x.login.ToLower() == loginEntry.Text.ToLower() && x.senha.ToLower() == passwordEntry.Text.ToLower()).FirstOrDefault();
+            var usuario1 = FutricaUsuariosServiceEx.TodosUsuarios.Where(x => x.nick.ToLower() == loginEntry.Text.ToLower() && x.senha.ToLower() == passwordEntry.Text.ToLower()).FirstOrDefault();
 
             //vm.validaLogin(loginEntry.Text, passwordEntry.Text);
 
@@ -83,6 +83,9 @@ namespace Futrica
         protected override async void OnAppearing()
         {
             FutricaUsuariosServiceEx.removeAll();
+
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
 
             string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Usuarios");
             List<Usuario> usuarios = JsonConvert.DeserializeObject<List<Usuario>>(content);

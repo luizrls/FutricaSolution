@@ -20,10 +20,14 @@ namespace Futrica
     {
         private readonly HttpClient _client = new HttpClient(); //Creating a new instance of HttpClient. (Microsoft.Net.Http)
 
+
+
         //MensagensListViewModel vm;
 
         public Conversa conversa { get; set; }
         public int UsuarioId { get; set; }
+
+        private static bool ativarLoop = false;
         
         public Mensagens(Conversa conversa, int UsuarioId)
         {
@@ -40,6 +44,12 @@ namespace Futrica
             //    var target = vm.Messages[vm.Messages.Count - 1];
             //    MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             //};
+
+            if (MessagesListView.ItemsSource == null)
+            {
+                FutricaMensagensServiceEx.removeAll();
+                MessagesListView.ItemsSource = FutricaMensagensServiceEx.TodasMensagens;
+            }
         }
 
         void MyListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -55,52 +65,155 @@ namespace Futrica
 
         protected override async void OnAppearing()
         {
-            FutricaMensagensServiceEx.removeAll();
 
-            string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Mensagens" + "?ConversaId=" + conversa.id);
-            List<Mensagen> mensagens = JsonConvert.DeserializeObject<List<Mensagen>>(content);
+            ativarLoop = true;
 
-            foreach (Mensagen mensagen in mensagens)
+            getMensagens();
+
+            //FutricaMensagensServiceEx.removeAll();
+
+            //_client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
+            //string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Mensagens" + "?ConversaId=" + conversa.id);
+            //List<Mensagen> mensagens = JsonConvert.DeserializeObject<List<Mensagen>>(content);
+
+            //foreach (Mensagen mensagen in mensagens)
+            //{
+            //    FutricaMensagensServiceEx.addItem(mensagen);
+            //}
+
+            //if (MessagesListView.ItemsSource == null)
+            //{
+
+            //}
+
+            //Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            //{
+            //    OnAppearing();
+            //    return true;
+            //});
+
+        }
+
+
+        protected override async void OnDisappearing()
+        {
+            ativarLoop = false;
+        }
+
+        private async void getMensagens()
+        {
+
+            if (!ativarLoop)
+                return;
+
+            try
             {
-                FutricaMensagensServiceEx.addItem(0, mensagen);
+
+                
+
+                _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
+                string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Mensagens" + "?ConversaId=" + conversa.id);
+                List<Mensagen> mensagens = JsonConvert.DeserializeObject<List<Mensagen>>(content);
+
+                foreach (Mensagen mensagen in mensagens)
+                {
+                    FutricaMensagensServiceEx.addItem(mensagen);
+                }
+
+                MessagesListView.ScrollTo(mensagens[mensagens.Count - 1], ScrollToPosition.End, true);
+
+                if (ativarLoop)
+                {
+                    Device.StartTimer(TimeSpan.FromSeconds(6), () =>
+                    {
+                        getMensagens();
+                        return true;
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+
             }
 
-            MessagesListView.ItemsSource = FutricaMensagensServiceEx.TodasMensagens;
-            base.OnAppearing();
+            
         }
 
         private async void OnAdd(object sender, EventArgs e)
         {
-            Mensagen mensagen = new Mensagen
+
+            try
             {
-                mensagem = mensagemEntry.Text,
-                IsIncoming = false,
-                dtEnvio = DateTime.Now,
-                UsuarioId = App.Usuario.id,
-                usuarioNick = App.Usuario.nick,
-                ConversaId = conversa.id,
-                MensagemTiposId = 1,
-                flgAtivo = true,
-            };
+                ativarLoop = false;
 
-            string content = JsonConvert.SerializeObject(mensagen);
-            await _client.PostAsync(Constantes.ApiBaseURL + "Mensagens", new StringContent(content, Encoding.UTF8, "application/json"));
-            FutricaMensagensServiceEx.addItem(mensagen);
+                Mensagen mensagen = new Mensagen
+                {
+                    mensagem = mensagemEntry.Text,
+                    IsIncoming = false,
+                    dtEnvio = DateTime.Now,
+                    UsuarioId = App.Usuario.id,
+                    usuarioNick = App.Usuario.nick,
+                    ConversaId = conversa.id,
+                    MensagemTiposId = 1,
+                    flgAtivo = true,
+                };
 
-            mensagemEntry.Text = "";
+                string content = JsonConvert.SerializeObject(mensagen);
+
+                _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
+                await _client.PostAsync(Constantes.ApiBaseURL + "Mensagens", new StringContent(content, Encoding.UTF8, "application/json"));
+                //FutricaMensagensServiceEx.addItem(mensagen);
+
+                mensagemEntry.Text = "";
+
+                MessagesListView.ScrollTo(FutricaMensagensServiceEx.TodasMensagens[FutricaMensagensServiceEx.TodasMensagens.Count - 1], ScrollToPosition.End, true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ativarLoop = true;
+
+                Device.StartTimer(TimeSpan.FromSeconds(6), () =>
+                {
+                    getMensagens();
+                    return true;
+                });
+            }
+
+            
         }
+
+
 
         private async void OnUpdate(object sender, EventArgs e)
         {
             Mensagen mensagen = FutricaMensagensServiceEx.TodasMensagens[0];
             mensagen.mensagem += " [updated]";
             string content = JsonConvert.SerializeObject(mensagen);
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
             await _client.PutAsync(Constantes.ApiBaseURL + "Mensagens" + "/" + mensagen.id, new StringContent(content, Encoding.UTF8, "application/json"));
         }
 
         private async void OnDelete(object sender, EventArgs e)
         {
             Mensagen mensagen = FutricaMensagensServiceEx.TodasMensagens[0];
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
             await _client.DeleteAsync(Constantes.ApiBaseURL + "Mensagens" + "/" + mensagen.id);
             FutricaMensagensServiceEx.removeItem(mensagen);
         }

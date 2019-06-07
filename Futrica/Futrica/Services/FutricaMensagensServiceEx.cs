@@ -20,16 +20,26 @@ namespace Futrica.Services
 
         public static void addItem(Mensagen mensagen)
         {
-
             mensagen.usuarioNick = mensagen.usuarioNick + " - " + mensagen.dtEnvio.ToString("dd/mm/yyyy hh:MM:ss");
 
-            TodasMensagens.Add(mensagen);
+            foreach (Mensagen msg in TodasMensagens)
+            {
+                if (msg.id == mensagen.id)
+                    return;
+            }
 
+            TodasMensagens.Add(mensagen);
         }
 
         public static void addItem(int index, Mensagen mensagen)
         {
             mensagen.usuarioNick = mensagen.usuarioNick + " - " + mensagen.dtEnvio.ToString("dd/mm/yyyy hh:MM:ss");
+
+            foreach (Mensagen msg in TodasMensagens)
+            {
+                if (msg.id == mensagen.id)
+                    return;
+            }
 
             TodasMensagens.Insert(index, mensagen);
         }

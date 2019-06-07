@@ -17,11 +17,23 @@ namespace Futrica.Services
 
         public static void addItem(ConversasUsuario conversasUsuario)
         {
+            foreach (ConversasUsuario cvu in TodasConversasUsuarios)
+            {
+                if (cvu.id == conversasUsuario.id)
+                    return;
+            }
+
             TodasConversasUsuarios.Add(conversasUsuario);
         }
 
         public static void addItem(int index, ConversasUsuario conversasUsuario)
         {
+            foreach (ConversasUsuario cvu in TodasConversasUsuarios)
+            {
+                if (cvu.id == conversasUsuario.id)
+                    return;
+            }
+
             TodasConversasUsuarios.Insert(index, conversasUsuario);
         }
 

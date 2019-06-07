@@ -21,11 +21,16 @@ namespace Futrica
     {
         private readonly HttpClient _client = new HttpClient(); //Creating a new instance of HttpClient. (Microsoft.Net.Http)
 
+        private bool ativarLoop = false;
+
         public Conversas()
         {
             InitializeComponent();
             // BindingContext = new ConversasListViewModel();
             BindingContext = FutricaConversasServiceEx.TodasConversas;
+
+            
+
         }
 
         async void OnContatosButtonClicked(object sender, EventArgs e)
@@ -56,7 +61,61 @@ namespace Futrica
 
         protected override async void OnAppearing()
         {
-            FutricaConversasUsuariosServiceEx.removeAll();
+            ativarLoop = true;
+            getConversas();
+
+            //FutricaConversasUsuariosServiceEx.removeAll();
+
+            //_client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
+            //string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "ConversasUsuarios");
+            //List<ConversasUsuario> conversasUsuarios = JsonConvert.DeserializeObject<List<ConversasUsuario>>(content);
+            //List<int> ids = new List<int>();
+
+            //foreach (ConversasUsuario conversasUsuario in conversasUsuarios)
+            //{
+            //    FutricaConversasUsuariosServiceEx.addItem(0, conversasUsuario);
+
+            //    if (conversasUsuario.UsuarioId == App.Usuario.id)
+            //    {
+            //        ids.Add(conversasUsuario.ConversaId);
+            //    }
+
+            //}
+
+            //FutricaConversasServiceEx.removeAll();
+
+            //_client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
+            //content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Conversas"); 
+            //List<Conversa> conversas = JsonConvert.DeserializeObject<List<Conversa>>(content); 
+
+            //foreach (Conversa conversa in conversas)
+            //{
+            //    FutricaConversasServiceEx.addItem(0, conversa);
+            //}
+
+            //ConversasListView.ItemsSource = FutricaConversasServiceEx.TodasConversas.Where(x=> ids.Contains(x.id));
+
+            //base.OnAppearing();
+        }
+
+        protected override async void OnDisappearing()
+        {
+            ativarLoop = false;
+        }
+
+        private async void getConversas()
+        {
+
+            if (ConversasListView.ItemsSource == null)
+            {
+                FutricaConversasUsuariosServiceEx.removeAll();
+                FutricaConversasServiceEx.removeAll();
+                ConversasListView.ItemsSource = FutricaConversasServiceEx.TodasConversas;
+            }
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
 
             string content = await _client.GetStringAsync(Constantes.ApiBaseURL + "ConversasUsuarios");
             List<ConversasUsuario> conversasUsuarios = JsonConvert.DeserializeObject<List<ConversasUsuario>>(content);
@@ -70,22 +129,27 @@ namespace Futrica
                 {
                     ids.Add(conversasUsuario.ConversaId);
                 }
-                
+
             }
 
-            FutricaConversasServiceEx.removeAll();
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
 
-            content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Conversas"); 
-            List<Conversa> conversas = JsonConvert.DeserializeObject<List<Conversa>>(content); 
+            content = await _client.GetStringAsync(Constantes.ApiBaseURL + "Conversas");
+            List<Conversa> conversas = JsonConvert.DeserializeObject<List<Conversa>>(content);
 
-            foreach (Conversa conversa in conversas)
+            foreach (Conversa conversa in conversas.Where(x => ids.Contains(x.id)))
             {
                 FutricaConversasServiceEx.addItem(0, conversa);
             }
 
-            ConversasListView.ItemsSource = FutricaConversasServiceEx.TodasConversas.Where(x=> ids.Contains(x.id));
-
-            base.OnAppearing();
+            if (ativarLoop)
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(90), () =>
+                {
+                    getConversas();
+                    return true;
+                });
+            }
         }
 
         private async void OnAdd(object sender, EventArgs e)
@@ -94,7 +158,9 @@ namespace Futrica
             { nome = "Nova Conversa",
               flgAtivo = true,
               flgGrupo = false
-            }; 
+            };
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
 
             string content = JsonConvert.SerializeObject(conversa); 
             await _client.PostAsync(Constantes.ApiBaseURL + "Conversas", new StringContent(content, Encoding.UTF8, "application/json"));
@@ -111,6 +177,9 @@ namespace Futrica
 
         private async void OnDelete(object sender, EventArgs e)
         {
+
+            _client.Timeout = TimeSpan.FromSeconds(Constantes.timeoutSeconds);
+
             Conversa conversa = FutricaConversasServiceEx.TodasConversas[0];
             await _client.DeleteAsync(Constantes.ApiBaseURL + "Conversas" + "/" + conversa.id);
             FutricaConversasServiceEx.removeItem(conversa);

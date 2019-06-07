@@ -24,7 +24,11 @@ namespace Futrica
             }
             else
             {
-                MainPage = new NavigationPage(new Conversas());
+                MainPage = new NavigationPage(new Conversas())
+                {
+                    BarBackgroundColor = Color.FromHex("#3F4552"),
+                    BarTextColor = Color.White,
+                };
             }
         }
 

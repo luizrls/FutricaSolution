@@ -40,7 +40,6 @@ namespace Futrica.Services
             TodosUsuarios = new ObservableCollection<Usuario> {
                 new Usuario {
                     id = 2,
-                    login = "lsanto27",
                     nick = "lsanto27",
                     flgAtivo = true,
                     senha = "1234"

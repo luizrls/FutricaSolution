@@ -53,10 +53,6 @@ namespace FutricaApi.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Usuario>()
-                .Property(e => e.login)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Usuario>()
                 .Property(e => e.senha)
                 .IsUnicode(false);
 

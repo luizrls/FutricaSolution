@@ -19,10 +19,6 @@ namespace FutricaApi.Models
 
         [Required]
         [StringLength(200)]
-        public string login { get; set; }
-
-        [Required]
-        [StringLength(200)]
         public string senha { get; set; }
 
         [Required]

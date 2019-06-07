@@ -33,7 +33,7 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="FutricaLogo" Source="FutricaLogo.png" VerticalOptions="Start" Margin="0,3,0,0"/>
 
-                <Entry x:Name="loginEntry" Grid.Row="1"  Placeholder="Login" Text="lsanto27" PlaceholderColor="#FFFFFF" FontSize="Large" TextColor="#FFFFFF"/>
+                <Entry x:Name="loginEntry" Grid.Row="1"  Placeholder="Nick" Text="lsanto27" PlaceholderColor="#FFFFFF" FontSize="Large" TextColor="#FFFFFF"/>
                 <Entry x:Name="passwordEntry" Grid.Row="2"  Placeholder="Password" Text="1234" PlaceholderColor="#FFFFFF" FontSize="Large" IsPassword="True" TextColor="#FFFFFF"/>
                 <Button Text="LogIn" Clicked="OnLoginButtonClicked" BackgroundColor="#20232C" TextColor="White" HeightRequest="50" VerticalOptions="Start" Grid.Row="3"/>
                 

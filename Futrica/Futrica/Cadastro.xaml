@@ -28,8 +28,7 @@
                 <Image x:Name="FutricaLogo" Source="FutricaLogo.png" VerticalOptions="Start" Margin="0,3,0,0"/>
 
                 <Entry x:Name="NickEntry" Grid.Row="1"  Placeholder="Nick" Text="" PlaceholderColor="#FFFFFF" FontSize="Large" TextColor="#FFFFFF"/>
-                <Entry x:Name="loginEntry" Grid.Row="2"  Placeholder="Login" Text="" PlaceholderColor="#FFFFFF" FontSize="Large" TextColor="#FFFFFF"/>
-                <Entry x:Name="passwordEntry" Grid.Row="3"  Placeholder="Password" Text="" PlaceholderColor="#FFFFFF" FontSize="Large" IsPassword="True" TextColor="#FFFFFF"/>
+                <Entry x:Name="passwordEntry" Grid.Row="2"  Placeholder="Password" Text="" PlaceholderColor="#FFFFFF" FontSize="Large" IsPassword="True" TextColor="#FFFFFF"/>
 
                 <Button Text="Sign Up" Clicked="OnCadastrarButtonClicked" BackgroundColor="#20232C" TextColor="White" HeightRequest="50" VerticalOptions="Start" Grid.Row="4"/>
 

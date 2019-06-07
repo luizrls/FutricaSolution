@@ -1,4 +1,5 @@
-﻿using Futrica.Models;
+﻿using Futrica;
+using Futrica.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace MonkeyChat
             var messageVm = item as Mensagen;
             if (messageVm == null)
                 return null;
-            return messageVm.IsIncoming ? this.incomingDataTemplate : this.outgoingDataTemplate;
+            return messageVm.UsuarioId == App.Usuario.id ? this.incomingDataTemplate : this.outgoingDataTemplate;
         }
 
         private readonly DataTemplate incomingDataTemplate;

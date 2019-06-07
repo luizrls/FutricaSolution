@@ -17,14 +17,14 @@ namespace FutricaApi.Controllers
         private Contexto db = new Contexto();
 
         // GET: api/Usuarios
-        public IQueryable<UsuarioDTO> GetUsuarios() => db.Usuarios.Select(x=> new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login, senha = x.senha });
+        public IQueryable<UsuarioDTO> GetUsuarios() => db.Usuarios.Select(x=> new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, senha = x.senha });
 
 
         // GET: api/Usuarios?login=Teste&senha=1234
         [ResponseType(typeof(UsuarioDTO))]
-        public IHttpActionResult GetUsuario(string login, string senha)
+        public IHttpActionResult GetUsuario(string nick, string senha)
         {
-            UsuarioDTO usuario = db.Usuarios.Where(x=> x.login ==  login && x.senha == senha).Select(x => new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, login = x.login, senha = x.senha }).FirstOrDefault();
+            UsuarioDTO usuario = db.Usuarios.Where(x=> x.nick ==  nick && x.senha == senha).Select(x => new UsuarioDTO { id = x.id, nick = x.nick, flgAtivo = x.flgAtivo, senha = x.senha }).FirstOrDefault();
             if (usuario == null)
             {
                 return NotFound();
@@ -85,7 +85,6 @@ namespace FutricaApi.Controllers
             usuarioDTO.id = usuario.id;
             usuarioDTO.nick = usuario.nick;
             usuarioDTO.flgAtivo = usuario.flgAtivo;
-            usuarioDTO.login = usuario.login;
 
             return CreatedAtRoute("DefaultApi", new { id = usuarioDTO.id }, usuarioDTO);
         }
@@ -124,7 +123,6 @@ namespace FutricaApi.Controllers
             usuarioDTO.id = usuario.id;
             usuarioDTO.nick = usuario.nick;
             usuarioDTO.flgAtivo = usuario.flgAtivo;
-            usuarioDTO.login = usuario.login;
 
             return Ok(usuarioDTO);
         }

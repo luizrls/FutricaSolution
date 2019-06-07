@@ -17,12 +17,25 @@ namespace Futrica.Services
 
         public static void addItem(Conversa conversa)
         {
+            foreach (Conversa cv in TodasConversas)
+            {
+                if (cv.id == conversa.id)
+                    return;
+            }
+
             TodasConversas.Add(conversa);
+
         }
 
         public static void addItem(int index, Conversa conversa)
         {
-            TodasConversas.Insert(index,conversa);
+            foreach (Conversa cv in TodasConversas)
+            {
+                if (cv.id == conversa.id)
+                    return;
+            }
+
+            TodasConversas.Insert(index, conversa);
         }
 
         public static void removeItem(Conversa conversa)

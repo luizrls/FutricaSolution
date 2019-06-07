@@ -31,7 +31,7 @@ namespace Futrica
 
         async void OnCadastrarButtonClicked(object sender, EventArgs e)
         {
-            Usuario usuario = FutricaUsuariosServiceEx.TodosUsuarios.Where(x => x.login.ToLower() == loginEntry.Text.ToLower() || x.nick.ToLower() == NickEntry.Text.ToLower()).FirstOrDefault();
+            Usuario usuario = FutricaUsuariosServiceEx.TodosUsuarios.Where(x => x.nick.ToLower() == NickEntry.Text.ToLower()).FirstOrDefault();
 
             if (usuario != null)
             {
@@ -41,7 +41,6 @@ namespace Futrica
 
             usuario = new Usuario
             {
-                login = loginEntry.Text,
                 senha = passwordEntry.Text,
                 nick = NickEntry.Text,
                 flgAtivo = true
@@ -56,7 +55,6 @@ namespace Futrica
 
             await DisplayAlert("Sucesso!", "Cadastro realizado com sucesso!", "Ok");
 
-            loginEntry.Text = "";
             passwordEntry.Text = "";
             NickEntry.Text = "";
         }

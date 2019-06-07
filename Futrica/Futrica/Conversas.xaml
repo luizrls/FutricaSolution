@@ -32,9 +32,11 @@
         </ListView>
 </ContentPage>-->
 
+<!--BackgroundImage="bg.jpg"-->
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             BackgroundImage="bg.jpg"
+             BackgroundColor="#3F4552"
              x:Class="Futrica.Conversas"
              Title="Conversas">
     <ContentPage.ToolbarItems>
@@ -52,8 +54,8 @@
         ItemSelected="ConversasListView_ItemSelected" ItemTapped="lvItemTapped">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell 
-	         Text="{Binding nome}" Detail="{Binding UsuarioId}" DetailColor="Blue"/>
+                <ImageCell 
+	         Text="{Binding nome}" Detail="Ativo" TextColor="White" DetailColor="Yellow" ImageSource ="ct.png"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
